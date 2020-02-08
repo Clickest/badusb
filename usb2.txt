@@ -1,2 +1,2 @@
 $wshell = New-Object -ComObject Wscript.Shell
-$Output = $wshell.Popup("Kocham Cię! ❤")
+$Output = $wshell.Popup("Kocham Cie!")
