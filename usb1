@@ -9,7 +9,7 @@ if (-not (Test-Path -Path $WallpapersFolder -PathType Container))
 }
 
 Copy-Item $OldWallpaperPath -Destination "$($WallpapersFolder)\OldWallpaper.jpg" -Force;
-Copy-Item "I:\Public\IT RTC - 2018.04.25 Town Hall (Pictures)\0011_fot. Dunvael_Photography.jpg" -Destination "$($WallpapersFolder)\NewWallpaper.jpg" -Force;
+Copy-Item "I:\Public\RTC-MS-DEV-2\AIM\Wallpaper\Heniu2.jpg" -Destination "$($WallpapersFolder)\NewWallpaper.jpg" -Force;
 
 Set-ItemProperty -path "HKCU:\Control Panel\Desktop\" -name WallpaperStyle -value 6;
 Set-ItemProperty -path "HKCU:\Control Panel\Desktop\" -name WallPaper -value "$($WallpapersFolder)\NewWallpaper.jpg";
