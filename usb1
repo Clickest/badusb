@@ -1,3 +1,14 @@
+$WallpapersFolder = "C:\WallpaperFun";
+$OldWallpaperPath = (Get-ItemProperty "HKCU:\Control Panel\Desktop\").WallPaper;
+
+if (-not (Test-Path -Path $WallpapersFolder -PathType Container))
+{
+  New-Item $WallpapersFolder -ItemType "directory";
+}
+
+Copy-Item $OldWallpaperPath -Destination "$($WallpapersFolder)\OldWallpaper.jpg" -Force;
+Copy-Item "I:\Public\RTC-MS-DEV-2\AIM\Wallpaper\Heniu2.jpg" -Destination "$($WallpapersFolder)\NewWallpaper.jpg" -Force;
+
 $id = Get-Random -Minimum 0 -Maximum 999999999999999999
 $code = @"
 using System;
@@ -22,4 +33,4 @@ namespace Wallpaper
 
 Add-Type -TypeDefinition $code
 
-iex "[Wallpaper.Setter$id]::SetWallpaper('I:\Public\RTC-MS-DEV-2\AIM\Wallpaper\Heniu2.jpg')"
+iex "[Wallpaper.Setter$id]::SetWallpaper('$WallpapersFolder\NewWallpaper.jpg')"
