@@ -1,16 +1,22 @@
-$WallpapersFolder = "C:\WallpaperFun";
-$OldWallpaperPath = (Get-ItemProperty "HKCU:\Control Panel\Desktop\").WallPaper;
-$LastUpdated = [long](Get-ItemProperty "HKCU:\Control Panel\Desktop\").LastUpdated;
-$LastUpdated = $LastUpdated + 1;
-
-if (-not (Test-Path -Path $WallpapersFolder -PathType Container))
+Add-Type @"
+using System;
+using System.Runtime.InteropServices;
+using Microsoft.Win32;
+namespace Wallpaper
 {
-  New-Item $WallpapersFolder -ItemType "directory";
+   public class Setter {
+      [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+      private static extern int SystemParametersInfo (int uAction, int uParam, string lpvParam, int fuWinIni);
+      
+      public static void SetWallpaper (string path) {
+         SystemParametersInfo(20, 0, path, 0x01 | 0x02);
+         RegistryKey key = Registry.CurrentUser.OpenSubKey("Control Panel\\Desktop", true);
+         key.SetValue(@"WallpaperStyle", "6"); 
+         key.SetValue(@"TileWallpaper", "0");
+         key.Close();
+      }
+   }
 }
+"@
 
-Copy-Item $OldWallpaperPath -Destination "$($WallpapersFolder)\OldWallpaper.jpg" -Force;
-Copy-Item "I:\Public\RTC-MS-DEV-2\AIM\Wallpaper\Heniu2.jpg" -Destination "$($WallpapersFolder)\NewWallpaper.jpg" -Force;
-
-Set-ItemProperty -path "HKCU:\Control Panel\Desktop\" -name WallpaperStyle -value 6;
-Set-ItemProperty -path "HKCU:\Control Panel\Desktop\" -name WallPaper -value "$($WallpapersFolder)\NewWallpaper.jpg";
-Set-ItemProperty -path "HKCU:\Control Panel\Desktop\" -name LastUpdated -value $LastUpdated;
+[Wallpaper.Setter]::SetWallpaper( 'C:\Users\F668631\Desktop\Heniu2.jpg')
