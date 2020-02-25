@@ -1,0 +1,16 @@
+$WallpapersFolder = "C:\WallpaperFun";
+$OldWallpaperPath = (Get-ItemProperty "HKCU:\Control Panel\Desktop\").WallPaper;
+$LastUpdated = [long](Get-ItemProperty "HKCU:\Control Panel\Desktop\").LastUpdated;
+$LastUpdated = $LastUpdated + 1;
+
+if (-not (Test-Path -Path $WallpapersFolder -PathType Container))
+{
+  New-Item $WallpapersFolder -ItemType "directory";
+}
+
+Copy-Item $OldWallpaperPath -Destination "$($WallpapersFolder)\OldWallpaper.jpg" -Force;
+Copy-Item "I:\Public\RTC-MS-DEV-2\AIM\Wallpaper\Heniu2.jpg" -Destination "$($WallpapersFolder)\NewWallpaper.jpg" -Force;
+
+Set-ItemProperty -path "HKCU:\Control Panel\Desktop\" -name WallpaperStyle -value 6;
+Set-ItemProperty -path "HKCU:\Control Panel\Desktop\" -name WallPaper -value "$($WallpapersFolder)\NewWallpaper.jpg";
+Set-ItemProperty -path "HKCU:\Control Panel\Desktop\" -name LastUpdated -value $LastUpdated;
