@@ -22,4 +22,4 @@ namespace Wallpaper
 
 Add-Type -TypeDefinition $code
 
-iex "[Wallpaper.Setter$id]::SetWallpaper( 'C:\Users\F668631\Desktop\Heniu2.jpg')"
+iex "[Wallpaper.Setter$id]::SetWallpaper('I:\Public\RTC-MS-DEV-2\AIM\Wallpaper\Heniu2.jpg')"
