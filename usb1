@@ -1,17 +1,18 @@
-Add-Type @"
+$id = Get-Random -Minimum 0 -Maximum 999999999999999999
+$code = @"
 using System;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
 namespace Wallpaper
 {
-   public class Setter {
+   public class Setter$id {
       [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
       private static extern int SystemParametersInfo (int uAction, int uParam, string lpvParam, int fuWinIni);
       
       public static void SetWallpaper (string path) {
          SystemParametersInfo(20, 0, path, 0x01 | 0x02);
          RegistryKey key = Registry.CurrentUser.OpenSubKey("Control Panel\\Desktop", true);
-         key.SetValue(@"WallpaperStyle", "6"); 
+         key.SetValue(@"WallpaperStyle", "3"); 
          key.SetValue(@"TileWallpaper", "0");
          key.Close();
       }
@@ -19,4 +20,6 @@ namespace Wallpaper
 }
 "@
 
-[Wallpaper.Setter]::SetWallpaper( 'C:\Users\F668631\Desktop\Heniu2.jpg')
+Add-Type -TypeDefinition $code
+
+iex "[Wallpaper.Setter$id]::SetWallpaper( 'C:\Users\F668631\Desktop\Heniu2.jpg')"
